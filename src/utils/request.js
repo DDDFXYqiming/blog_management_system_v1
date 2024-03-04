@@ -1,6 +1,7 @@
 // axios封装
 import axios from "axios";
-import { getToken } from "./token";
+import { getToken, removeToken } from "./token";
+import router from "../router";
 // 跟域名配置
 // 超时时间
 const http = axios.create({
@@ -31,6 +32,11 @@ http.interceptors.response.use(
   },
   (error) => {
     // 超出 2xx 范围的状态码都会触发该函数,对响应错误操作
+    if(error.response.status === 401){
+      removeToken()
+      router.navigate('/login')
+      window.location.reload()
+    }
     return Promise.reject(error);
   }
 );

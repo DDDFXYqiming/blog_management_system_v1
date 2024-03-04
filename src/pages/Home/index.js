@@ -1,7 +1,13 @@
-const Home =()=>{
-    return(
-        <div>Home组件</div>
-    )
-}
+import BarChart from "./component/BarChart";
+import "./index.scss";
 
-export default Home
+const Home = () => {
+  return (
+    <div id="chart">
+      <BarChart title={"三大框架满意度"} />
+      <BarChart title={"三大框架使用度"} />
+    </div>
+  );
+};
+
+export default Home;

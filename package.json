@@ -11,6 +11,7 @@
     "axios": "^1.6.7",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.10",
+    "echarts": "^5.5.0",
     "json-server": "^1.0.0-alpha.23",
     "lodash": "^4.17.21",
     "mockjs": "^1.1.0",
