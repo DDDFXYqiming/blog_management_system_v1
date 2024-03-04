@@ -52,7 +52,7 @@ const Login = () => {
                 message: "请输入账号",
               },
               {
-                pattern: /^[\u4e00-\u9fa5a-zA-Z0-9]{2,12}$/,
+                pattern: /^[\u4e00-\u9fa5a-zA-Z0-9]{1,12}$/,
                 message: "请输入正确的账号格式",
               },
             ]}

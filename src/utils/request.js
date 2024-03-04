@@ -14,7 +14,7 @@ http.interceptors.request.use(
     // 注入token数据
     const token = getToken()
     if(token){
-      config.headers.Authorization = `${token}`
+      config.headers.Authorization = `Bearer ${token}`
     }
     return config;
   },
@@ -22,6 +22,7 @@ http.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 // 响应拦截器
 http.interceptors.response.use(
   (response) => {

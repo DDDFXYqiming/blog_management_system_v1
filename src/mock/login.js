@@ -1,13 +1,17 @@
 import Mock from "mockjs";
 
 const mockLoginData = {
-  username: "aaa",
-  password: "aaa",
-  verification: "aaa",
+  username: "v",
+  password: "v",
+  verification: "v",
 };
 
-const loginMock = Mock.mock("https://whole-similarly-impala.ngrok-free.app/api/login", "post", (req, res) => {
+const loginMock = Mock.mock(
+  "https://whole-similarly-impala.ngrok-free.app/api/login", 
+  "post",
+   (req, res) => {
   const { username, password, verification } = JSON.parse(req.body);
+  // console.log(req,res)
   if (
     username === mockLoginData.username &&
     password === mockLoginData.password &&
@@ -17,9 +21,7 @@ const loginMock = Mock.mock("https://whole-similarly-impala.ngrok-free.app/api/l
       code: 200,
       message: "Login successful",
       data: {
-        token:'mockToken123',
-        userId: 123,
-        username: username,
+        token:'Bearer mockToken123',
       },
     };
   } else {
