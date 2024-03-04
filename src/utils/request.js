@@ -1,5 +1,6 @@
 // axios封装
 import axios from "axios";
+import { getToken } from "./token";
 // 跟域名配置
 // 超时时间
 const http = axios.create({
@@ -10,6 +11,11 @@ const http = axios.create({
 // 请求拦截器
 http.interceptors.request.use(
   (config) => {
+    // 注入token数据
+    const token = getToken()
+    if(token){
+      config.headers.Authorization = `${token}`
+    }
     return config;
   },
   (error) => {

@@ -4,9 +4,10 @@ import ReactDOM from "react-dom/client";
 // import store from "./store";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
-// import "./index.scss"
+import "./index.scss"
 import { Provider } from "react-redux";
 import store from "./store";
+import 'normalize.css'
 // 模拟后端数据
 import "./mock"
 
