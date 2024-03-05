@@ -1,5 +1,6 @@
 import Mock from "mockjs";
 
+// 获取频道列表
 const channelListMock = Mock.mock(
   "https://whole-similarly-impala.ngrok-free.app/api/channelList",
   "get",
@@ -34,31 +35,52 @@ const channelListMock = Mock.mock(
   }
 );
 
+// 文章发布
 const mpArticleMock = Mock.mock(
   "https://whole-similarly-impala.ngrok-free.app/api/mp/articles",
   "post",
   (req, res) => {
     const { title, content, channel_id } = JSON.parse(req.body);
     // 验证请求 body 参数格式
-    if (title && content && typeof channel_id === 'number') {
+    if (title && content && typeof channel_id === "number") {
       // 如果请求参数格式正确，则返回模拟的文章数据
-      return {
-        code: 200,
-        message: "文章发布成功",
-        data: {
-          article_id: Mock.Random.guid(), // 生成随机的文章 ID
-          title,
-          content,
-          channel_id
-        }
-      };
+      return {};
     } else {
-      return {
-        code: 400,
-        message: "请求参数格式错误，请检查标题、内容和频道 ID 是否正确填写"
-      };
+      return {};
     }
   }
 );
 
-export { channelListMock,mpArticleMock };
+// 获取文章列表
+const articleListMock = Mock.mock(
+  "https://whole-similarly-impala.ngrok-free.app/api/articleList",
+  "get",
+  (req, res) => {
+    // 模拟生成多篇文章列表
+    const articleData = [];
+    for (let i = 0; i < 10; i++) {
+      const article = {
+        id: Mock.Random.guid(), // 生成随机的文章 ID
+        comment_count: Mock.Random.integer(0, 100), // 随机生成评论数量
+        like_count: Mock.Random.integer(0, 100), // 随机生成点赞数量
+        pubdate: Mock.Random.datetime(), // 随机生成发布日期
+        read_count: Mock.Random.integer(0, 1000), // 随机生成阅读数量
+        status: Mock.Random.integer(0, 2), // 随机生成状态
+        title: Mock.Random.ctitle(5, 20), // 随机生成标题，长度在 5 到 20 之间
+      };
+      articleData.push(article);
+    }
+
+    // 返回模拟的文章列表数据
+    return {
+      code: 200,
+      message: "获取文章列表成功",
+      data: { 
+        articleData, 
+        total_count: 10 
+      },
+    };
+  }
+);
+
+export { channelListMock, mpArticleMock, articleListMock };

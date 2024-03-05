@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 // 可变部分抽象成prop参数
 const BarChart = ({title}) => {
   const chartRef = useRef(null);
+  
   useEffect(() => {
     // 保证dom可用 才进行图表的渲染
     // 获取要渲图表的dom结点

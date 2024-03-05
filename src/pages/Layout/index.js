@@ -20,12 +20,12 @@ const items = [
     icon: <HomeOutlined />,
   },
   {
-    label: "文章管理",
+    label: "查看文章",
     key: "/article",
     icon: <DiffOutlined />,
   },
   {
-    label: "创建文章",
+    label: "发布文章",
     key: "/publish",
     icon: <EditOutlined />,
   },
