@@ -4,18 +4,16 @@ import ReactDOM from "react-dom/client";
 // import store from "./store";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
-import "./index.scss"
+import "./index.scss";
 import { Provider } from "react-redux";
 import store from "./store";
-import 'normalize.css'
+import "normalize.css";
 // 模拟后端数据
-import "./mock"
+import "./mock";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 );
