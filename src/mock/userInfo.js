@@ -7,7 +7,7 @@ const userInfoMock = Mock.mock(
     // 在 Mock.js 中，模拟的请求并不会真实地经过拦截器
     //因此在模拟请求的回调函数中无法直接从请求头中获取token
     // const token = req.headers["Authorization"];
-    const token = "Bearer mockToken123"
+    const token = "Bearer mockToken123";
     // 根据 token 获取用户信息
     if (token === "Bearer mockToken123") {
       return {
@@ -15,11 +15,19 @@ const userInfoMock = Mock.mock(
         message: "获取用户信息成功",
         data: {
           id: 123,
-          name: "v",
-          photo: '@image("200x100", "#ccc", "#333", "Mock Image")',
-          mobile:'13312345678',
-          gender:1,
-          birthday:'2077-01-01',
+          name: "银河球棒侠",
+          gender: 1,
+          profile: "个人简介",
+          birthday: "2077-01-01",
+          maritalStatus: 0,
+          QQ: "888888888",
+          mobile: "13312345678",
+          email: "example@example.com",
+          highestEducationSchool: "某某大学",
+          highestEducationMajor: "某某专业",
+          highestEducationDegree: 0,
+          industry: "IT",
+          jobTitle: "软件工程师",
         },
       };
     } else {
@@ -31,4 +39,20 @@ const userInfoMock = Mock.mock(
   }
 );
 
-export { userInfoMock };
+const updateUserInfoMock = Mock.mock(
+  "https://whole-similarly-impala.ngrok-free.app/api/updateuserinfo",
+  "post",
+  (req, res) => {
+    // 获取请求的数据
+    const data = JSON.parse(req.body);
+    console.log("接收userinfo数据:", data);
+
+    // 假设后端成功接收并处理请求，返回成功响应
+    return {
+      code: 200,
+      message: "用户信息更新成功",
+    };
+  }
+);
+
+export { userInfoMock, updateUserInfoMock };

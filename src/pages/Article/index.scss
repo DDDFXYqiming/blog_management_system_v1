@@ -1,0 +1,8 @@
+.article {
+  display: flex;
+  justify-content: center;
+  .main-article {
+    width: 60%;
+    min-width: 700px;
+  }
+}

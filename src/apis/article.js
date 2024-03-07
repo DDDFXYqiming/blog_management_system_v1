@@ -1,7 +1,7 @@
 // 文章相关接口函数
 import { http } from "../utils";
 
-// 获取频道列表请求
+// 获取专栏列表请求
 export function getChannelAPI() {
   return http({
     url: "/api/channelList", 
@@ -19,9 +19,10 @@ export function createArticleAPI(data) {
 }
 
 // 获取文章列表
-export function getArticleListAPI(){
+export function getArticleListAPI(params){
   return http({
     url:"/api/articleList",
     method:'GET',
+    params
   })
 }

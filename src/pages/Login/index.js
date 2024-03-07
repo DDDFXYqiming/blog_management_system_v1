@@ -9,37 +9,22 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigete = useNavigate()
+  const navigate = useNavigate();
+
   const onFinish = async (values) => {
-    // 登陆逻辑 触发异步action
-    await dispatch(fetchLogin(values));
-    navigete('/')
-    message.success('登陆成功')
+    try {
+      // 登陆逻辑 触发异步action
+      await dispatch(fetchLogin(values));
+      navigate("/");
+      message.success("登陆成功");
+    } catch (error) {
+      message.error("登陆失败，请检查用户名和密码");
+    }
   };
-
-  // // 测试后端通信
-  // const test = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "https://whole-similarly-impala.ngrok-free.app/code.jpg",
-  //       {
-  //         // 设置 withCredentials 为 true，以携带 cookies
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     console.log("数据", response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   test();
-  // }, []);
 
   return (
     <div className="login">
-      <Card className="login-container">
+      <Card title="登陆页面" className="login-container">
         {/* <img className="login-logo" src={logo} alt="" /> */}
         {/* 登录表单 */}
         <Form onFinish={onFinish} validateTrigger="onBlur">
@@ -84,6 +69,7 @@ const Login = () => {
           <div className="verification-container">
             <Image src="error" className="verification-image" />
           </div>
+          <a href="/register">没有账号？注册</a>
           <Form.Item>
             <Button type="primary" htmlType="submit" size="large" block>
               登录

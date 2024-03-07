@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { getChannelAPI } from "../apis/article";
 
-// 封装获取频道列表逻辑
+// 封装获取专栏列表逻辑
 function useChannel(){
 
-  // 获取频道列表
+  // 获取专栏列表
   const [channelList, setChannelList] = useState([]);
 
   useEffect(() => {

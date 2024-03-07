@@ -1,6 +1,6 @@
 import Mock from "mockjs";
 
-// 获取频道列表
+// 获取专栏列表
 const channelListMock = Mock.mock(
   "https://whole-similarly-impala.ngrok-free.app/api/channelList",
   "get",
@@ -21,7 +21,7 @@ const channelListMock = Mock.mock(
     if (token === "Bearer mockToken123") {
       return {
         code: 200,
-        message: "获取频道列表信息成功",
+        message: "获取专栏列表信息成功",
         data: {
           channels: channelData.channels,
         },
@@ -53,9 +53,16 @@ const mpArticleMock = Mock.mock(
 
 // 获取文章列表
 const articleListMock = Mock.mock(
-  "https://whole-similarly-impala.ngrok-free.app/api/articleList",
+  /https:\/\/whole-similarly-impala.ngrok-free.app\/api\/articleList(\?.*)?/,
   "get",
   (req, res) => {
+    // 解析请求的 Query 参数
+    const urlParams = new URLSearchParams(req.url.split("?")[1]);
+    const status = urlParams.get("status") || "all";
+    const channel_id = urlParams.get("channel_id") || 0;
+    const page = urlParams.get("page") || 1;
+    const per_page = urlParams.get("per_page") || 10;
+
     // 模拟生成多篇文章列表
     const articleData = [];
     for (let i = 0; i < 10; i++) {
@@ -75,12 +82,17 @@ const articleListMock = Mock.mock(
     return {
       code: 200,
       message: "获取文章列表成功",
-      data: { 
-        articleData, 
-        total_count: 10 
+      data: {
+        articleData,
+        total_count: 10,
+        status,
+        channel_id,
+        page,
+        per_page,
       },
     };
   }
 );
+
 
 export { channelListMock, mpArticleMock, articleListMock };

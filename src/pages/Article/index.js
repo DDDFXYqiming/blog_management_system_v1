@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Card,
   Breadcrumb,
@@ -7,22 +7,22 @@ import {
   Radio,
   DatePicker,
   Select,
+  Flex,
 } from "antd";
-// 时间选择器汉化
-import locale from "antd/es/date-picker/locale/zh_CN";
 
-import { Table, Tag, Space } from "antd";
+import { Table, Tag, Space, List, Avatar } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import img404 from "@/assets/error.png";
 import { useChannel } from "../../hooks/useChannel";
 import { useEffect, useState } from "react";
 import { getArticleListAPI } from "../../apis/article";
+import "./index.scss";
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const Article = () => {
-  const {channelList} = useChannel()
+  const navigate = useNavigate();
+  const { channelList } = useChannel();
   // 准备列数据
   const columns = [
     {
@@ -68,69 +68,123 @@ const Article = () => {
     //   },
     // },
   ];
+
   // 获取文章列表
-  const [list,setList] = useState()
-  const [count,setCount] = useState(0)
-  useEffect(()=>{
-    async function getList(){
-      const res = await getArticleListAPI()
-      console.log(res)
-      setList(res.data.articleData)
-      setCount(res.data.total_count)
-      // console.log(list)
+  const [list, setList] = useState();
+  const [count, setCount] = useState(0);
+  // 准备参数
+  const [reqData, setReqData] = useState({
+    status: "all",
+    channel_id: "0",
+    page: 1,
+    per_page: 4,
+  });
+
+  useEffect(() => {
+    async function getList() {
+      const res = await getArticleListAPI(reqData);
+      setList(res.data.articleData);
+      setCount(res.data.total_count);
+      // console.log("文章列表表单数据", res);
     }
-    getList()
-  },[])
+    getList();
+  }, [reqData]);
+
+  // 筛选功能
+
+  // 获取表单筛选数据
+  const onFinish = (formValue) => {
+    // 表单数据放入参数中（不可变方式）
+    setReqData({
+      ...reqData,
+      channel_id: formValue.channel_id,
+      status: formValue.status,
+    });
+    // 重新拉取文章列表+table渲染（通过reqData变化执行useEffect)
+  };
+
+  // 分页功能
+  const onPageChange = (page) => {
+    // 修改参数依赖项 引发列表重新渲染
+    setReqData({
+      ...reqData,
+      page,
+    });
+  };
 
   return (
-    <div>
-      <Card
-        title={
-          <Breadcrumb
-            items={[
-              { title: <Link to={"/"}>首页</Link> },
-              { title: "文章列表" },
-            ]}
+    <div className="article">
+      <div className="main-article">
+        <Card
+          title={
+            <Breadcrumb
+              items={[
+                { title: <Link to={"/"}>首页</Link> },
+                { title: "文章列表" },
+              ]}
+            />
+          }
+          style={{ marginBottom: 20 }}
+        >
+          <Form 
+          initialValues={{ status: "" }} 
+          onFinish={onFinish}>
+            <Flex>
+            <Form.Item label="状态" name="status">
+              <Radio.Group>
+                <Radio value={""}>综合</Radio>
+                <Radio value={1}>最新</Radio>
+                <Radio value={2}>热门</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item label="专栏" name="channel_id">
+              <Select
+                placeholder="请选择文章专栏"
+                // defaultValue="lucy"
+                style={{ width: 120 }}
+              >
+                {channelList.map((item) => (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginLeft: 40 }}
+              >
+                筛选
+              </Button>
+            </Form.Item>
+            </Flex>
+          </Form>
+        </Card>
+        {/* 表格区域 */}
+        <Card title={`根据筛选条件共查询到 ${count} 条结果：`}>
+          <List
+            itemLayout="horizontal"
+            dataSource={list}
+            renderItem={(item, index) => (
+              <List.Item>
+                <List.Item.Meta
+                  title={
+                    <a href="/articleDetailLayout" target="_blank">
+                      {item.title}
+                    </a>
+                  }
+                  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                />
+                <div>read_count {item.read_count} |</div>
+                <div>like_count {item.like_count} |</div>
+                <div>pubdate {item.pubdate} |</div>
+              </List.Item>
+            )}
           />
-        }
-        style={{ marginBottom: 20 }}
-      >
-        <Form initialValues={{ status: "" }}>
-          <Form.Item label="状态" name="status">
-            <Radio.Group>
-              <Radio value={""}>综合</Radio>
-              <Radio value={1}>最新</Radio>
-              <Radio value={2}>热门</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item label="频道" name="channel_id">
-            <Select
-              placeholder="请选择文章频道"
-              // defaultValue="lucy"
-              style={{ width: 120 }}
-            >
-              {channelList.map(item=>
-              <Option key={item.id} value={item.id}>{item.name}</Option>)}
-            </Select>
-          </Form.Item>
-
-            {/* 传入locale属性 控制中文显示*/}
-          {/* <Form.Item label="日期" name="date">
-            <RangePicker locale={locale}></RangePicker>
-          </Form.Item> */}
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ marginLeft: 40 }}>
-              筛选
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
-      {/* 表格区域 */}
-      <Card title={`根据筛选条件共查询到 ${count} 条结果：`}>
-        <Table rowKey="id" columns={columns} dataSource={list} />
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };

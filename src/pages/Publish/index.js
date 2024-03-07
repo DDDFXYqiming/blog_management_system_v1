@@ -62,11 +62,11 @@ const Publish = () => {
             <Input placeholder="请输入文章标题" style={{ width: 400 }} />
           </Form.Item>
           <Form.Item
-            label="频道"
+            label="专栏"
             name="channel_id"
-            rules={[{ required: true, message: "请选择文章频道" }]}
+            rules={[{ required: true, message: "请选择文章专栏" }]}
           >
-            <Select placeholder="请选择文章频道" style={{ width: 400 }}>
+            <Select placeholder="请选择文章专栏" style={{ width: 400 }}>
               {channelList.map((item) => (
                 <Option key={item.id} value={item.id}>
                   {item.name}

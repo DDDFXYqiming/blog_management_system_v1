@@ -1,4 +1,4 @@
-import { Layout, Menu, Popconfirm } from "antd";
+import { Avatar, Dropdown, Flex, Input, Layout, Menu, Popconfirm } from "antd";
 import {
   HomeOutlined,
   DiffOutlined,
@@ -11,9 +11,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUserInfo, fetchUserInfo } from "../../store/modules/user";
 
+const { Search } = Input;
 const { Header, Sider } = Layout;
 
-const items = [
+const itemslist = [
   {
     label: "首页",
     key: "/",
@@ -43,47 +44,111 @@ const GeekLayout = () => {
   // 获取当前路径
   const location = useLocation();
   const selectedKey = location.pathname;
+  // console.log(selectedKey)
+
+  const name = useSelector((state) => state.user.userInfo.name);
+
+  // 退出登录确认回调
+  const logoutOnConfirm = () => {
+    dispatch(clearUserInfo());
+    navigate("/login");
+  };
+
+  // 个人中心确认回调
+  const myHomePageOnConfirm = () => {
+    navigate("/myhomepage");
+  };
+
+  // 设置确认回调
+  const settingsOnConfirm = () => {
+    navigate("/settings/profileDetails");
+  };
+
+  // 用户头像下拉菜单
+  const items = [
+    {
+      key: "myhomepage",
+      label: (
+        <span>
+          <div onClick={myHomePageOnConfirm}>个人中心</div>
+        </span>
+      ),
+    },
+    {
+      key: "settings",
+      label: (
+        <span>
+          <div onClick={settingsOnConfirm}>设置</div>
+        </span>
+      ),
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "logout",
+      label: (
+        <span className="user-logout">
+          <div onClick={logoutOnConfirm}>退出</div>
+        </span>
+      ),
+    },
+  ];
+
+  // 搜索框搜索回调
+  const onSearch = (value) => {
+    console.log("搜索框内容", value);
+    navigate("/article");
+  };
 
   //  触发获取用户个人信息
   useEffect(() => {
     dispatch(fetchUserInfo());
   }, [dispatch]);
 
-  const name = useSelector(state =>state.user.userInfo.name)
- 
-  // 退出登录确认回调
-  const onConfirm =()=>{
-    dispatch(clearUserInfo())
-    navigate('/login')
-  }
   return (
     <Layout>
       <Header className="header">
-        {/* <div className="logo" /> */}
+        <Menu
+          className="menu"
+          mode="horizontal"
+          items={itemslist}
+          selectedKeys={selectedKey}
+          onClick={onMenuClick}
+        ></Menu>
         <div className="user-info">
-          <span className="user-name">{name}</span>
-          <span className="user-logout">
-            <Popconfirm 
-            title="是否确认退出？" 
-            okText="退出" 
-            cancelText="取消"
-            onConfirm={onConfirm}>
-              <LogoutOutlined /> 退出
-            </Popconfirm>
-          </span>
+          <Flex>
+            {/* <div className="search"> */}
+            <Search
+              className="search"
+              placeholder="谢邀"
+              allowClear
+              onSearch={onSearch}
+            />
+            {/* </div> */}
+            {/* 用户头像 */}
+            <Dropdown
+              menu={{
+                items,
+              }}
+              placement="bottomRight"
+              arrow={{ pointAtCenter: true }}
+            >
+              <Avatar
+                style={{
+                  backgroundColor: "blue",
+                  verticalAlign: "middle",
+                  marginRight: 100,
+                }}
+                size="middle"
+              >
+                {name}
+              </Avatar>
+            </Dropdown>
+          </Flex>
         </div>
       </Header>
       <Layout>
-        <Sider width={200} className="site-layout-background">
-          <Menu
-            mode="inline"
-            theme="dark"
-            selectedKeys={selectedKey}
-            onClick={onMenuClick}
-            items={items}
-            style={{ height: "100%", borderRight: 0 }}
-          ></Menu>
-        </Sider>
         <Layout className="layout-content" style={{ padding: 20 }}>
           <Outlet />
         </Layout>
