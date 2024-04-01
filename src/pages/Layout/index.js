@@ -10,6 +10,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUserInfo, fetchUserInfo } from "../../store/modules/user";
+import { logoutAPI } from "../../apis/user";
 
 const { Search } = Input;
 const { Header, Sider } = Layout;
@@ -46,16 +47,19 @@ const GeekLayout = () => {
   const selectedKey = location.pathname;
   // console.log(selectedKey)
 
-  const name = useSelector((state) => state.user.userInfo.name);
+  const { name, avatarUrl } = useSelector((state) => state.user.userInfo);
 
   // 退出登录确认回调
-  const logoutOnConfirm = () => {
+  const logoutOnConfirm = async () => {
     dispatch(clearUserInfo());
+    // 退出登录请求
+    // await logoutAPI()
     navigate("/login");
   };
 
   // 个人中心确认回调
   const myHomePageOnConfirm = () => {
+    console.log(avatarUrl);
     navigate("/myhomepage");
   };
 
@@ -118,14 +122,12 @@ const GeekLayout = () => {
         ></Menu>
         <div className="user-info">
           <Flex>
-            {/* <div className="search"> */}
             <Search
               className="search"
               placeholder="谢邀"
               allowClear
               onSearch={onSearch}
             />
-            {/* </div> */}
             {/* 用户头像 */}
             <Dropdown
               menu={{
@@ -135,15 +137,13 @@ const GeekLayout = () => {
               arrow={{ pointAtCenter: true }}
             >
               <Avatar
+                src={avatarUrl}
                 style={{
-                  backgroundColor: "blue",
                   verticalAlign: "middle",
                   marginRight: 100,
                 }}
                 size="middle"
-              >
-                {name}
-              </Avatar>
+              ></Avatar>
             </Dropdown>
           </Flex>
         </div>

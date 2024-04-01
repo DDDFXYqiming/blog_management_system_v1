@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { http, removeToken } from "../../utils";
 import { setToken as _setToken, getToken } from "../../utils";
-import { getProfileAPI, loginAPI } from "../../apis/user";
+import { getProfileAPI, loginAPI, loginEmailAPI } from "../../apis/user";
 
 const userStore = createSlice({
   name: "user",
@@ -37,15 +37,37 @@ const userReducer = userStore.reducer;
 // 异步方法 完成登录 获取token
 const fetchLogin = (loginFrom) => {
   return async (dispatch) => {
-    try {
-      // 发送异步请求
-      const res = await loginAPI(loginFrom);
-      // 提交同步action进行token的存入
-      dispatch(setToken(res.data.token));
-    } catch (error) {
-      // 登录失败，抛出错误
-      throw new Error("登录失败");
-    }
+    // try {
+    // 发送异步请求
+    const res = await loginAPI(loginFrom);
+    console.log("登陆返回信息", res);
+    // 提交同步action进行token的存入
+    // if (res.code === 200) {
+    dispatch(setToken(res.data.token));
+    // }
+
+    // } catch (error) {
+    //   // 登录失败，抛出错误
+    //   throw new Error("登录失败");
+    // }
+  };
+};
+
+const fetchLoginEmail = (loginFrom) => {
+  return async (dispatch) => {
+    // try {
+    // 发送异步请求
+    const res = await loginEmailAPI(loginFrom);
+    console.log("登陆返回信息", res);
+    // 提交同步action进行token的存入
+    // if (res.code === 200) {
+    dispatch(setToken(res.data.token));
+    // }
+
+    // } catch (error) {
+    //   // 登录失败，抛出错误
+    //   throw new Error("登录失败");
+    // }
   };
 };
 
@@ -53,11 +75,11 @@ const fetchLogin = (loginFrom) => {
 const fetchUserInfo = () => {
   return async (dispatch) => {
     const res = await getProfileAPI();
-    // console.log(res)
+    // console.log('获取个人用户信息',res)
     dispatch(setUserInfo(res.data));
   };
 };
 
-export { setToken, clearUserInfo, fetchLogin, fetchUserInfo };
+export { setToken, clearUserInfo, fetchLogin,fetchLoginEmail, fetchUserInfo };
 
 export default userReducer;

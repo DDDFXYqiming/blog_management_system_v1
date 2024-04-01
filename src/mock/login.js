@@ -1,27 +1,28 @@
 import Mock from "mockjs";
 
 const mockLoginData = {
-  username: "v",
+  nickname: "v",
   password: "v",
-  verification: "v",
+  text: "v",
 };
 
 const loginMock = Mock.mock(
   "https://whole-similarly-impala.ngrok-free.app/api/login", 
   "post",
    (req, res) => {
-  const { username, password, verification } = JSON.parse(req.body);
+  const { nickname, password, text } = JSON.parse(req.body);
   // console.log(req,res)
   if (
-    username === mockLoginData.username &&
+    nickname === mockLoginData.nickname &&
     password === mockLoginData.password &&
-    verification === mockLoginData.verification
+    text === mockLoginData.text
   ) {
     return {
       code: 200,
       message: "Login successful",
       data: {
         token:'Bearer mockToken123',
+        // 其他数据
       },
     };
   } else {

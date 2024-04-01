@@ -14,8 +14,8 @@ const itemslist = [
         key: "profileDetails",
       },
       {
-        label: "修改头像",
-        key: "modifyAvatar",
+        label: "隐私设置",
+        key: "privacySettings",
       },
       {
         label: "密码安全",
@@ -58,7 +58,9 @@ const Settings = () => {
               onClick={onMenuClick}
             ></Menu>
           </Sider>
+          <Layout width='75%' style={{ backgroundColor: "white" }}>
           <Outlet />
+          </Layout>
         </Layout>
       </Card>
     </div>

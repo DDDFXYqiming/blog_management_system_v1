@@ -10,7 +10,7 @@
 .logo {
   width: 200px;
   height: 60px;
-  background: url('~@/assets/logo.png') no-repeat center / 160px auto;
+  // background: url('~@/assets/logo.png') no-repeat center / 160px auto;
 }
 
 .layout-content {
@@ -25,16 +25,22 @@
   padding-right: 20px;
   color: blue;
 
-  .search{
-    width: 200px;
+  .search {
+    width: 300px;
     display: inline-block;
     margin-right: 100px;
+    // background-color: #f0f0f0;
+    // transition: background-color 0,3s;
+
+    // &:hover{
+    //   background-color: white;
+    // }
   }
-  
+
   .user-name {
     margin-right: 20px;
   }
-  
+
   // .user-logout {
   //   display: inline-block;
   //   cursor: pointer;

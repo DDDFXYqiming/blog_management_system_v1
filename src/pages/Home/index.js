@@ -24,7 +24,7 @@ const Home = () => {
       // console.log("文章列表表单数据", res);
     }
     getList();
-  }, [reqData]);
+  }, [reqData]); 
 
   return (
     <div className="home">

@@ -10,9 +10,9 @@ import Register from "../pages/Register";
 import MyHomepage from "../pages/MyHomepage";
 import Settings from "../pages/Settings";
 import ProfileDetails from "../pages/Settings/component/ProfileDetails";
-import ModifyAvatar from "../pages/Settings/component/ModifyAvatar";
 import PasswordSecurity from "../pages/Settings/component/PasswordSecurity";
 import ArticleDetailLayout from "../pages/ArticleDetail";
+import PrivacySettings from "../pages/Settings/component/PrivacySettings";
 
 // 配置路由实例
 const router = createBrowserRouter([
@@ -55,8 +55,8 @@ const router = createBrowserRouter([
             element: <ProfileDetails />,
           },
           {
-            path: "modifyAvatar",
-            element: <ModifyAvatar />,
+            path: "privacySettings",
+            element: <PrivacySettings />,
           },
           {
             path: "passwordSecurity",

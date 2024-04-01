@@ -1,4 +1,4 @@
-// 封装高阶组件
+// 封装高阶组件HOC
 
 import { Navigate } from "react-router-dom"
 import { getToken } from "../utils"

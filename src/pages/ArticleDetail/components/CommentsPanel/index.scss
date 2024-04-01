@@ -1,0 +1,9 @@
+.commentInput{
+    background-color: #f0f0f0; // 默认背景颜色
+    transition: background-color 0.3s; // 添加过渡效果
+
+    &:hover {
+      background-color: white; // 鼠标移上去时的背景颜色
+    }
+
+}

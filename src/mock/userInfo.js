@@ -1,5 +1,6 @@
 import Mock from "mockjs";
 
+
 const userInfoMock = Mock.mock(
   "https://whole-similarly-impala.ngrok-free.app/api/userinfo",
   "get",
@@ -14,7 +15,7 @@ const userInfoMock = Mock.mock(
         code: 200,
         message: "获取用户信息成功",
         data: {
-          id: 123,
+          id: 3,
           name: "银河球棒侠",
           gender: 1,
           profile: "个人简介",
@@ -28,6 +29,7 @@ const userInfoMock = Mock.mock(
           highestEducationDegree: 0,
           industry: "IT",
           jobTitle: "软件工程师",
+          avatarUrl: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
         },
       };
     } else {

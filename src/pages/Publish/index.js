@@ -8,9 +8,10 @@ import {
   Upload,
   Space,
   Select,
+  message,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./index.scss";
 
 import ReactQuill from "react-quill";
@@ -21,10 +22,11 @@ import { useChannel } from "../../hooks/useChannel";
 const { Option } = Select;
 
 const Publish = () => {
+  const navigate = useNavigate()
   const {channelList} = useChannel()
 
   // 提交表单
-  const onFinish = (formValue) => {
+  const onFinish = async (formValue) => {
     // 按照接口文档处理表单数据格式
     const { title, content, channel_id } = formValue;
     const reqData = {
@@ -32,8 +34,13 @@ const Publish = () => {
       content,
       channel_id,
     };
+
+    console.log('发给后端文章数据',reqData)
     // 调用接口提交
-    createArticleAPI(reqData);
+    const res = await createArticleAPI(reqData);
+    console.log(res)
+    message.success("发布成功");
+    navigate('/')
   };
 
   return (

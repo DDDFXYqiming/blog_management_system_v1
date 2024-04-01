@@ -2,6 +2,8 @@
 import axios from "axios";
 import { getToken, removeToken } from "./token";
 import router from "../router";
+import { message } from "antd";
+
 // 跟域名配置
 // 超时时间
 const http = axios.create({
@@ -35,12 +37,19 @@ http.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    // 超出 2xx 范围的状态码都会触发该函数,对响应错误操作
-    if (error.response.status === 401) {
-      removeToken();
-      router.navigate("/login");
-      window.location.reload();
+    if (error.response.data) {
+      message.error(error.response.data.message);
     }
+    // 超出 2xx 范围的状态码都会触发该函数,对响应错误操作
+    // if (
+    //   error.response.status === 401 &&
+    //   error.response.message === "登陆失败"
+    // ) {
+    //   removeToken();
+    //   router.navigate("/login");
+    //   window.location.reload();
+    // }
+
     return Promise.reject(error);
   }
 );

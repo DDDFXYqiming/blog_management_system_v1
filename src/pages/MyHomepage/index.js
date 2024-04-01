@@ -7,9 +7,10 @@ import { useSelector } from "react-redux";
 import UserProfile from "./component/UserProfile";
 import MyArticles from "./component/MyArticles";
 import MyLikes from "./component/MyLikes";
+import MyFollowers from "./component/MyFollowers";
 
 const MyHomepage = () => {
-  const name = useSelector((state) => state.user.userInfo.name);
+  const {name,avatarUrl} = useSelector((state) => state.user.userInfo);
   const tabsitems = [
     {
       label: `个人资料`,
@@ -22,9 +23,14 @@ const MyHomepage = () => {
       children: <MyArticles />,
     },
     {
-      label: `我的点赞`,
+      label: `我的收藏`,
       key: "3",
       children: <MyLikes />,
+    },
+    {
+      label: `关注/粉丝`,
+      key: "4",
+      children: <MyFollowers />,
     },
   ];
 
@@ -43,19 +49,23 @@ const MyHomepage = () => {
       >
         <div>
           <Avatar
+            src={avatarUrl}
             style={{
-              backgroundColor: "blue",
               verticalAlign: "middle",
               marginRight: 100,
             }}
             size="middle"
-          >
-            {name}
-          </Avatar>
+          ></Avatar>
           <span>{name}</span>
         </div>
         <Divider />
-        <Tabs defaultActiveKey="1" type="card" size="large" items={tabsitems} />
+        <Tabs
+          style={{ width: "100%" }}
+          defaultActiveKey="1"
+          type="card"
+          size="large"
+          items={tabsitems}
+        />
       </Card>
     </div>
   );

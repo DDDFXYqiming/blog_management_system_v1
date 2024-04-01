@@ -5,6 +5,7 @@ import { mpArticleMock } from "./article";
 import { articleListMock } from "./article";
 import { registerMock } from "./register";
 import { updateUserInfoMock } from "./userInfo";
+import { commentListMock } from "./comments";
 
 export {
   loginMock,
@@ -14,4 +15,5 @@ export {
   articleListMock,
   registerMock,
   updateUserInfoMock,
+  commentListMock,
 };

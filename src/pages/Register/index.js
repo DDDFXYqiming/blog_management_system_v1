@@ -1,33 +1,47 @@
 import "./index.scss";
-import { Card, Form, Input, Button, Image, message } from "antd";
-// import logo from '@/assets/logo.png'
-import axios from "axios";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchLogin } from "../../store/modules/user";
+import { Card, Form, Input, Button, message } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerAPI } from "../../apis/user";
+import { identityCodeAPI, registerAPI } from "../../apis/user";
+import VerificationCode from "./VerificationCode/VerificationCode";
 
 const Register = () => {
-  const dispatch = useDispatch();
-  const navigete = useNavigate()
-  
+  const [identityCode, setIdentityCode] = useState("");
+  const [identity, setIdentity] = useState("");
+  const navigete = useNavigate();
+
   const onFinish = async (values) => {
-    // 登陆逻辑 触发异步action
-    await registerAPI(values)
-    message.success('注册成功')
-    navigete('/login')
+    // 注册逻辑 触发异步action
+    const addIdentity = { ...values, identity: identity };
+
+    // console.log(addIdentity)
+    const res = await registerAPI(addIdentity);
+    console.log("注册返回值：", res);
+    if (res.code !== "200") {
+      message.error("注册失败，验证码错误或存在同名用户名");
+      return;
+    }
+
+    message.success("注册成功");
+    navigete("/login");
   };
+
+  useEffect(() => {
+    const getcode = async () => {
+      const res = await identityCodeAPI();
+      // console.log(res)
+      setIdentity(res.identity);
+      setIdentityCode(`data:image/png;base64,${res.image}`);
+    };
+    getcode();
+  }, []);
 
   return (
     <div className="register">
-      <Card title="注册页面"  className="register-container">
-        {/* <img className="login-logo" src={logo} alt="" /> */}
-        {/* 注册表单 */}
+      <Card title="注册页面" className="register-container">
         <Form onFinish={onFinish} validateTrigger="onBlur">
           <Form.Item
             name="nickname"
-            // 校验逻辑
             rules={[
               {
                 required: true,
@@ -43,14 +57,13 @@ const Register = () => {
           </Form.Item>
           <Form.Item
             name="email"
-            // 校验逻辑
             rules={[
               {
                 required: true,
                 message: "请输入邮箱",
               },
               {
-                type:'email',
+                type: "email",
                 message: "请输入正确的邮箱格式",
               },
             ]}
@@ -63,6 +76,12 @@ const Register = () => {
               {
                 required: true,
                 message: "请输入密码",
+              },
+              {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+={}\[\]:;<>,.?~\-]).{6,18}$/,
+                message:
+                  "密码必须包含小写字母、大写字母、特殊字符，并且长度为6-18个字符",
               },
             ]}
           >
@@ -77,10 +96,10 @@ const Register = () => {
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error('两次输入的密码不一致'));
+                  return Promise.reject(new Error("两次输入的密码不一致"));
                 },
               }),
             ]}
@@ -99,7 +118,13 @@ const Register = () => {
             <Input size="large" placeholder="请输入验证码" />
           </Form.Item>
           <div className="verification-container">
-            <Image src="error" className="verification-image" />
+            <img
+              src={identityCode}
+              alt="验证码"
+              className="verification-image"
+            />
+            {/* 获取验证码图片组件 */}
+            {/* <VerificationCode /> */}
           </div>
           <a href="/login">已有账号？登陆</a>
           <Form.Item>

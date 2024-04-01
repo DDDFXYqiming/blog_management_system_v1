@@ -6,7 +6,7 @@ const registerMock = Mock.mock(
   (req, res) => {
     const { nickname,email, password, text } = JSON.parse(req.body);
     // console.log(req,res)
-    if (1) {
+    if (false) {
       return {
         code: 200,
         message: "Register successful",

@@ -26,7 +26,7 @@ const MyArticles= ()=>{
 
     return(
         <div>
-        <Card className="card">
+        <Card>
           <List
             itemLayout="horizontal"
             dataSource={list}

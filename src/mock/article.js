@@ -44,15 +44,22 @@ const mpArticleMock = Mock.mock(
     // 验证请求 body 参数格式
     if (title && content && typeof channel_id === "number") {
       // 如果请求参数格式正确，则返回模拟的文章数据
-      return {};
+      return {
+        code: 200,
+        message: "发布文章成功",
+        data: {
+        },};
     } else {
-      return {};
+      return {
+        code: 401,
+        message: "发布文章失败",};
     }
   }
 );
 
 // 获取文章列表
 const articleListMock = Mock.mock(
+  // 模拟传递Query参数
   /https:\/\/whole-similarly-impala.ngrok-free.app\/api\/articleList(\?.*)?/,
   "get",
   (req, res) => {
