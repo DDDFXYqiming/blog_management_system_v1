@@ -1,59 +1,40 @@
 {
-  "name": "blog_management_system",
-  "version": "0.1.0",
+  "name": "blog-management-system",
   "private": true,
-  "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^41.1.0",
-    "@ckeditor/ckeditor5-react": "^6.2.0",
-    "@reduxjs/toolkit": "^2.2.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "antd": "^5.15.0",
-    "antd-img-crop": "^4.21.0",
-    "axios": "^1.6.7",
-    "classnames": "^2.5.1",
-    "dayjs": "^1.11.10",
-    "echarts": "^5.5.0",
-    "json-server": "^1.0.0-alpha.23",
-    "lodash": "^4.17.21",
-    "mockjs": "^1.1.0",
-    "normalize.css": "^8.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-quill": "^2.0.0-beta.2",
-    "react-redux": "^9.1.0",
-    "react-router-dom": "^6.22.1",
-    "react-scripts": "5.0.1",
-    "uuid": "^9.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "2.0.0",
+  "type": "module",
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@ant-design/icons": "^5.5.2",
+    "@reduxjs/toolkit": "^2.5.0",
+    "antd": "^5.22.5",
+    "antd-img-crop": "^4.23.0",
+    "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
+    "echarts": "^5.5.1",
+    "msw": "^2.7.0",
+    "normalize.css": "^8.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-quill": "^2.0.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
-    "sass": "^1.71.1"
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "sass": "^1.83.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
   }
 }
