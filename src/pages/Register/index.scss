@@ -1,32 +1,41 @@
 .register {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: center/cover url('@/assets/login.png');
-  
-    .login-logo {
-      width: 200px;
-      height: 60px;
-      display: block;
-      margin: 0 auto 20px;
-    }
-  
-    .register-container {
-      width: 440px;
-      min-height: 500px;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 50px rgb(0 0 0 / 10%);
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    .register-checkbox-label {
-      color: #1890ff;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background: center/cover url('@/assets/login.png');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--blog-space-5);
+
+  .register-container {
+    width: 440px;
+    max-width: 100%;
+    border-radius: var(--blog-radius-lg) !important;
+    box-shadow: var(--blog-shadow-lg);
+    border: 1px solid var(--blog-border);
+
+    .ant-card-head {
+      border-bottom: 1px solid var(--blog-border);
+      font-size: var(--blog-text-xl);
     }
   }
+
+  .verification-container {
+    margin-bottom: var(--blog-space-3);
+
+    .verification-image {
+      width: 120px;
+      height: 40px;
+      border: 1px solid var(--blog-border);
+      border-radius: var(--blog-radius-sm);
+      cursor: pointer;
+    }
+
+    .verification-refresh {
+      color: var(--blog-accent);
+      font-size: var(--blog-text-xs);
+      cursor: pointer;
+    }
+  }
+}

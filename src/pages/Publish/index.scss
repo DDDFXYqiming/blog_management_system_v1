@@ -1,17 +1,33 @@
 .publish {
-  position: relative;
-}
+  max-width: var(--blog-container);
+  margin: 0 auto;
 
-.ant-upload-list {
-  .ant-upload-list-picture-card-container,
-  .ant-upload-select {
-    width: 146px;
-    height: 146px;
+  .ant-card {
+    border: 1px solid var(--blog-border);
+    border-radius: var(--blog-radius-md);
+    box-shadow: var(--blog-shadow-sm);
+
+    .ant-card-head {
+      border-bottom: 1px solid var(--blog-border);
+    }
   }
 }
 
 .publish-quill {
+  border-radius: var(--blog-radius-md);
+  overflow: hidden;
+
+  .ql-toolbar {
+    border-color: var(--blog-border);
+  }
+
+  .ql-container {
+    border-color: var(--blog-border);
+    font-size: var(--blog-text-base);
+  }
+
   .ql-editor {
     min-height: 300px;
+    line-height: 1.8;
   }
 }

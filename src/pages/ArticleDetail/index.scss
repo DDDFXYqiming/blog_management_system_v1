@@ -1,19 +1,120 @@
-.articleDetail {
-  display: flex;
-  justify-content: center;
+.article-detail {
+  max-width: var(--blog-reading-width);
+  margin: 0 auto;
+  background: var(--blog-surface);
+  border: 1px solid var(--blog-border);
+  border-radius: var(--blog-radius-lg);
+  padding: var(--blog-space-8) var(--blog-space-6);
+}
 
-  .card {
-    width: 60%;
-    min-width: 700px;
+.detail-header {
+  margin-bottom: var(--blog-space-4);
+}
+
+.detail-title {
+  font-family: var(--blog-font-serif);
+  font-size: var(--blog-text-3xl);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--blog-space-5);
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--blog-space-4);
+  color: var(--blog-muted);
+  font-size: var(--blog-text-sm);
+  margin-bottom: var(--blog-space-4);
+}
+
+.meta-author {
+  font-weight: 600;
+  color: var(--blog-text);
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.detail-tags {
+  display: flex;
+  gap: var(--blog-space-2);
+}
+
+.detail-divider {
+  margin: var(--blog-space-5) 0;
+}
+
+.detail-category {
+  color: var(--blog-muted);
+  font-size: var(--blog-text-sm);
+  margin-bottom: var(--blog-space-5);
+}
+
+// 正文排版
+.detail-body {
+  font-size: var(--blog-text-lg);
+  line-height: 1.9;
+  color: var(--blog-text);
+
+  p {
+    margin: 0 0 1.4em;
+  }
+
+  h2 {
+    font-size: var(--blog-text-xl);
+    margin: 1.6em 0 0.8em;
+    line-height: 1.4;
+  }
+
+  blockquote {
+    margin: 0 0 1.4em;
+    padding: var(--blog-space-3) var(--blog-space-5);
+    border-left: 3px solid var(--blog-accent);
+    background: var(--blog-accent-soft);
+    border-radius: 0 var(--blog-radius-sm) var(--blog-radius-sm) 0;
+    color: var(--blog-muted);
   }
 }
 
-.footerLayout {
-  // position: fixed;
-  // bottom: 0;
-  background-color: #fff;
+// 互动区
+.detail-actions {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: end;
+  gap: var(--blog-space-3);
+  justify-content: center;
+  margin: var(--blog-space-4) 0;
+}
+
+// 作者卡
+.author-card {
+  display: flex;
+  align-items: center;
+  gap: var(--blog-space-4);
+  background: var(--blog-bg);
+  border: 1px solid var(--blog-border);
+  border-radius: var(--blog-radius-md);
+  padding: var(--blog-space-4) var(--blog-space-5);
+}
+
+.author-name {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.author-bio {
+  color: var(--blog-muted);
+  font-size: var(--blog-text-sm);
+}
+
+@media (max-width: 768px) {
+  .article-detail {
+    padding: var(--blog-space-5) var(--blog-space-4);
+  }
+  .detail-title {
+    font-size: var(--blog-text-2xl);
+  }
 }

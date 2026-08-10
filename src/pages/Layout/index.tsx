@@ -64,20 +64,35 @@ const LayoutPage = () => {
   return (
     <Layout>
       <Header className="header">
-        <Menu
-          className="menu"
-          mode="horizontal"
-          items={navItems}
-          selectedKeys={[selectedKey]}
-          onClick={onMenuClick}
-        />
+        <Flex align="center" gap={32}>
+          <span
+            style={{
+              fontFamily: 'var(--blog-font-serif)',
+              fontSize: 'var(--blog-text-xl)',
+              fontWeight: 700,
+              letterSpacing: '-0.01em',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+            }}
+            onClick={() => navigate('/')}
+          >
+            知识博客
+          </span>
+          <Menu
+            className="menu"
+            mode="horizontal"
+            items={navItems}
+            selectedKeys={[selectedKey]}
+            onClick={onMenuClick}
+          />
+        </Flex>
         <div className="user-info">
           <Flex>
-            <Search className="search" placeholder="谢邀" allowClear onSearch={onSearch} />
+            <Search className="search" placeholder="搜索文章" allowClear onSearch={onSearch} />
             <Dropdown menu={{ items: userMenu }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
               <Avatar
                 src={avatarUrl}
-                style={{ verticalAlign: 'middle', marginRight: 100 }}
+                style={{ verticalAlign: 'middle', cursor: 'pointer' }}
                 size="default"
               />
             </Dropdown>

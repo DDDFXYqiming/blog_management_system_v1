@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  Card,
   Divider,
   Flex,
   Form,
@@ -49,74 +48,81 @@ const CommentsPanel = () => {
   }
 
   return (
-    <Card>
-      <Flex vertical>
-        <Flex align="center" gap="middle">
-          <Flex align="center" gap="small">
-            <h3>评论</h3>
-            <p>{commentsList.length}</p>
+    <section className="comments-panel">
+      <Flex align="center" justify="space-between" className="comments-header">
+        <Flex align="center" gap="small">
+          <h3 className="comments-title">评论</h3>
+          <span className="comments-count">{commentsList.length}</span>
+        </Flex>
+        <Radio.Group
+          options={[
+            { label: '最热', value: 'hot' },
+            { label: '最新', value: 'new' },
+          ]}
+          onChange={(e) => onCommentsGroupChange(e.target.value)}
+          value={commentsValue}
+          optionType="button"
+          size="small"
+        />
+      </Flex>
+
+      <Flex align="flex-start" gap="small" className="comment-input-row">
+        <Avatar src={avatarUrl} size="default" />
+        <Form
+          form={form}
+          style={{ width: '100%' }}
+          onFinish={onCommentInputFinish}
+          validateTrigger="onBlur"
+        >
+          <Flex justify="space-between" gap="middle" style={{ width: '100%' }}>
+            <Form.Item
+              name="inputContent"
+              style={{ width: '100%' }}
+              rules={[{ required: true, message: '请输入内容' }]}
+            >
+              <TextArea
+                className="comment-input"
+                showCount
+                maxLength={200}
+                placeholder="写下你的评论…"
+                autoSize={{ minRows: 3, maxRows: 10 }}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                发布
+              </Button>
+            </Form.Item>
           </Flex>
-          <Radio.Group
-            options={[
-              { label: '最热', value: 'hot' },
-              { label: '最新', value: 'new' },
-            ]}
-            onChange={(e) => onCommentsGroupChange(e.target.value)}
-            value={commentsValue}
-            optionType="button"
-          />
-        </Flex>
-        <Flex align="flex-start" gap="small">
-          <Avatar
-            src={avatarUrl}
-            style={{ verticalAlign: 'middle', minWidth: 35, minHeight: 35, marginLeft: 10, marginRight: 10 }}
-            size="default"
-          />
-          <Form form={form} style={{ width: '100%' }} onFinish={onCommentInputFinish} validateTrigger="onBlur">
-            <Flex justify="space-between" gap="middle" style={{ width: '100%' }}>
-              <Form.Item
-                name="inputContent"
-                style={{ width: '100%' }}
-                rules={[{ required: true, message: '请输入内容' }]}
-              >
-                <TextArea
-                  className="commentInput"
-                  showCount
-                  maxLength={200}
-                  placeholder="这里需要输入一条评论"
-                  autoSize={{ minRows: 3, maxRows: 10 }}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  发布
-                </Button>
-              </Form.Item>
-            </Flex>
-          </Form>
-        </Flex>
-        <Divider />
+        </Form>
+      </Flex>
+
+      <Divider className="comments-divider" />
+
+      {commentsList.length === 0 ? (
+        <div className="comments-empty">还没有评论，来抢沙发吧</div>
+      ) : (
         <List
           itemLayout="horizontal"
           dataSource={commentsList}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item className="comment-item">
               <Flex align="flex-start" gap="small">
-                <Avatar src={avatarUrl} size="large" style={{ marginTop: 15 }} />
-                <Flex align="flex-start" vertical gap="middle">
-                  <h4>{item.username}</h4>
-                  <div>{item.content}</div>
-                  <Flex gap="large">
-                    <p>{item.pubdate}</p>
-                    <p>点赞数：{item.like_count}</p>
+                <Avatar src={avatarUrl} size="large" />
+                <Flex align="flex-start" vertical gap={4}>
+                  <span className="comment-username">{item.username}</span>
+                  <div className="comment-content">{item.content}</div>
+                  <Flex gap="large" className="comment-meta">
+                    <span>{item.pubdate}</span>
+                    <span>点赞 {item.like_count}</span>
                   </Flex>
                 </Flex>
               </Flex>
             </List.Item>
           )}
         />
-      </Flex>
-    </Card>
+      )}
+    </section>
   )
 }
 

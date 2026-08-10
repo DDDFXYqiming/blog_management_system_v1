@@ -1,9 +1,61 @@
-.commentInput{
-    background-color: #f0f0f0; // 默认背景颜色
-    transition: background-color 0.3s; // 添加过渡效果
+.comments-panel {
+  margin-top: var(--blog-space-4);
+}
 
-    &:hover {
-      background-color: white; // 鼠标移上去时的背景颜色
-    }
+.comments-header {
+  margin-bottom: var(--blog-space-4);
+}
 
+.comments-title {
+  font-size: var(--blog-text-xl);
+  font-weight: 700;
+  margin: 0;
+}
+
+.comments-count {
+  color: var(--blog-faint);
+  font-size: var(--blog-text-sm);
+  background: var(--blog-bg);
+  border: 1px solid var(--blog-border);
+  border-radius: 999px;
+  padding: 1px 10px;
+}
+
+.comment-input-row {
+  .ant-avatar {
+    margin-top: 4px;
+  }
+}
+
+.comment-input {
+  border-radius: var(--blog-radius-md) !important;
+  background: var(--blog-bg);
+}
+
+.comments-divider {
+  margin: var(--blog-space-4) 0;
+}
+
+.comment-item {
+  padding: var(--blog-space-4) 0 !important;
+}
+
+.comment-username {
+  font-weight: 600;
+  font-size: var(--blog-text-sm);
+}
+
+.comment-content {
+  line-height: 1.8;
+}
+
+.comment-meta {
+  color: var(--blog-faint);
+  font-size: var(--blog-text-xs);
+}
+
+.comments-empty {
+  text-align: center;
+  color: var(--blog-muted);
+  padding: var(--blog-space-6) 0;
 }

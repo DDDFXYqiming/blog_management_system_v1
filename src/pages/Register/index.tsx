@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, message } from 'antd'
+import { Button, Card, Flex, Form, Input, message } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { identityCodeAPI, registerAPI } from '@/api'
@@ -97,17 +97,30 @@ const Register = () => {
           <Form.Item name="text" rules={[{ required: true, message: '请输入验证码' }]}>
             <Input size="large" placeholder="请输入验证码" />
           </Form.Item>
-          <div className="verification-container">
-            {identityCode && (
-              <img
-                src={identityCode}
-                alt="验证码"
-                className="verification-image"
-                title="点击刷新"
-                onClick={() => void refreshIdentityCode()}
-              />
-            )}
-          </div>
+      <div className="verification-container">
+        <Flex align="center" gap={8}>
+          {identityCode && (
+            <img
+              src={identityCode}
+              alt="验证码"
+              className="verification-image"
+              title="点击刷新"
+              onClick={() => void refreshIdentityCode()}
+            />
+          )}
+          <span
+            className="verification-refresh"
+            onClick={() => void refreshIdentityCode()}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void refreshIdentityCode()
+            }}
+          >
+            看不清？换一张
+          </span>
+        </Flex>
+      </div>
           <a href="/login">已有账号？登陆</a>
           <Form.Item>
             <Button type="primary" htmlType="submit" size="large" block>

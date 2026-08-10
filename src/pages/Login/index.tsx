@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, message, Space, Statistic, Tabs } from 'antd'
+import { Button, Card, Flex, Form, Input, message, Space, Statistic, Tabs } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -82,15 +82,28 @@ const Login = () => {
         <Input size="large" placeholder="请输入验证码" />
       </Form.Item>
       <div className="verification-container">
-        {identityCode && (
-          <img
-            src={identityCode}
-            alt="验证码"
-            className="verification-image"
-            title="点击刷新"
+        <Flex align="center" gap={8}>
+          {identityCode && (
+            <img
+              src={identityCode}
+              alt="验证码"
+              className="verification-image"
+              title="点击刷新"
+              onClick={() => void refreshIdentityCode()}
+            />
+          )}
+          <span
+            className="verification-refresh"
             onClick={() => void refreshIdentityCode()}
-          />
-        )}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void refreshIdentityCode()
+            }}
+          >
+            看不清？换一张
+          </span>
+        </Flex>
       </div>
       <a href="/register">没有账号？注册</a>
       <Form.Item>
@@ -144,7 +157,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Card title="登陆页面" className="login-container">
+      <Card title="登录页面" className="login-container">
         <Tabs defaultActiveKey="1" items={tabItems} />
       </Card>
     </div>
