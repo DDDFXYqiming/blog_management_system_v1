@@ -68,19 +68,34 @@ npm run dev
 
 ---
 
-## 目录结构
-
-```text
-src/
-├── api/          # Axios 实例封装与 RESTful 请求函数
-├── components/   # 通用业务控件（AuthRoute 路由守卫等）
-├── hooks/        # 业务复用 Hooks（useChannel 分类流等）
-├── mocks/        # MSW 内存数据库、接口处理器与种子数据
-├── pages/        # 业务视图（Home, Article, Publish, Profile, Settings 等）
-├── router/       # 路由表定义与导航拦截
-├── store/        # Redux Toolkit 切片与全局 Store
-└── types/        # 核心业务实体 TypeScript 类型定义
+```mermaid
+flowchart TD
+    subgraph UI["表现层 (React 18 + Ant Design)"]
+        Pages["业务视图 (Home 概览 / Article 文章管理 / Publish 富文本发布 / Profile 个人中心)"]
+        Components["通用控制与守卫组件 (AuthRoute 权限拦截)"]
+    end
+    subgraph State["状态与逻辑层"]
+        Store["Redux Toolkit 切片与全局凭据管理 (store/)"]
+        Hooks["业务自定义 Hooks (useChannel 等)"]
+    end
+    subgraph Services["数据通信与离线模拟"]
+        API["Axios 实例封装与 RESTful 接口 (api/)"]
+        Types["TypeScript 业务实体与响应模型 (types/)"]
+        MSW["MSW 浏览器端 Service Worker 模拟数据库 (mocks/)"]
+    end
+    Pages --> Components & Hooks & Store
+    Hooks & Store --> API --> Types
+    API <-->|Service Worker 请求拦截| MSW
 ```
+
+* **`api/`**：Axios 实例封装、请求/响应拦截器与 RESTful 接口
+* **`components/`**：通用业务控件与 `AuthRoute` 登录状态守卫
+* **`hooks/`**：业务复用 Hooks（如 `useChannel` 频道列表自动获取）
+* **`mocks/`**：MSW 内存模拟数据库、RESTful 处理器与初始文章种子数据
+* **`pages/`**：视图层（文章增删改查、富文本编辑发布、数据概览看板、账号中心）
+* **`router/`**：React Router 路由表与路由模式配置
+* **`store/`**：Redux Toolkit 状态切片（用户 Token、个人资料、持久化）
+* **`types/`**：文章模型、分类枚举与用户领域类型定义
 
 ---
 
